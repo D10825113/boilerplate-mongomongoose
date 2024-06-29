@@ -14,12 +14,13 @@ let Person = mongoose.model("Person", personSchema);
 
 const createAndSavePerson = (done) => {
   var janeFonda = new Person({
-    name: "Jane Fonda", 
-    age: 84, 
-    favoriteFoods: ["eggs", "fish", "fresh fruit"]});
+    name: "Jane Fonda",
+    age: 84,
+    favoriteFoods: ["eggs", "fish", "fresh fruit"]
+  });
 
-  janeFonda.save(function(err, data) {
-    if (err) 
+  janeFonda.save(function (err, data) {
+    if (err)
       return console.error(err);
     done(null, data)
   });
@@ -33,32 +34,32 @@ const createManyPeople = (arrayOfPeople, done) => {
 };
 
 const findPeopleByName = (personName, done) => {
-  Person.find ({name: personName}, function(err, personFound) { 
+  Person.find({ name: personName }, function (err, personFound) {
     if (err) return console.log(err);
     done(null, personFound);
   });
 };
 
 const findOneByFood = (food, done) => {
-  Person.findOne({favoriteFoods: food}, function(err, data) {
+  Person.findOne({ favoriteFoods: food }, function (err, data) {
     if (err) return console.log(err);
     done(null, data);
   });
 };
 
 const findPersonById = (personId, done) => {
-  Person.findById(personId, function(err, data) {
-  if(err) return console.log(err);
+  Person.findById(personId, function (err, data) {
+    if (err) return console.log(err);
     done(null, data);
   });
 };
 
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
-  Person.findById(personId, function(err, person) {
+  Person.findById(personId, function (err, person) {
     if (err) return console.log(err);
     person.favoriteFoods.push(foodToAdd);
-    person.save(function(err, updatedPerson) {
+    person.save(function (err, updatedPerson) {
       if (err) return console.log(err);
       done(null, updatedPerson);
     });
@@ -67,8 +68,17 @@ const findEditThenSave = (personId, done) => {
 
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
-
-  done(null /*, data*/);
+  //done(null /*, data*/);
+  // 假設 personName 包含有效的 _id 屬性
+   const test = Person.findOneAndUpdate(
+    {name: personName},
+    { age: ageToSet },
+    { new: true } ,
+    function(err, updatedPerson) {
+      if (err) console.error(err);
+      done(null, updatedPerson);
+    } 
+  ); 
 };
 
 const removeById = (personId, done) => {
