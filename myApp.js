@@ -70,7 +70,7 @@ const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
   //done(null /*, data*/);
   // 假設 personName 包含有效的 _id 屬性
-   const test = Person.findOneAndUpdate(
+  Person.findOneAndUpdate(
     {name: personName},
     { age: ageToSet },
     { new: true } ,
@@ -83,6 +83,7 @@ const findAndUpdate = (personName, done) => {
 
 const removeById = (personId, done) => {
   done(null /*, data*/);
+
 };
 
 const removeManyPeople = (done) => {
